@@ -151,7 +151,7 @@
 		 $data = htmlspecialchars($data);
 		 return $data;
 	}
-
+	$mysqli->close();
 ?>
 <html>
 <head>

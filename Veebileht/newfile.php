@@ -8,25 +8,18 @@
 	
 	$email_error = "";
 	$password_error = "";
-	
 	$firstname_error = "";
 	$lastname_error = "";
-	
 	$create_email = "";
 	$create_email_error = "";
-	
 	$create_email_confirm = "";
 	$create_email_confirm_error = "";
-	
 	$create_password = "";
 	$create_password_error = "";
-	
 	$create_password_confirm = "";
 	$create_password_confirm_error = "";
-	
 	$firstname = "";
 	$lastname = "";
-	
 	$email = "";
 	
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -65,10 +58,8 @@
 				$stmt = $mysqli->prepare("SELECT id, email FROM newfile WHERE email=? AND password=?");
 				echo $mysqli->error;
 				$stmt->bind_param("ss", $email, $hash);
-				
 				$stmt->bind_result($id_from_db, $email_from_db);
 				$stmt->execute();
-				
 				if($stmt->fetch()){
 					echo "Email ja parool oiged, kasutaja id=".$id_from_db;
 				}else{
@@ -132,11 +123,10 @@
 				
 				echo "Võib kasutajat luua! Kasutajanimi on ".$create_email." ja parool on ".$create_password. " ja räsi on".$hash;
 				
-				$stmt = $mysqli->prepare("INSERT INTO newfile (email, password) VALUES (?,?)");
+				$stmt = $mysqli->prepare("INSERT INTO newfile (email, password, firstname, lastname) VALUES (?,?,?,?)");
 				echo $mysqli->error;
 				echo $stmt->error;
-				
-				$stmt->bind_param("ss", $create_email, $create_password);
+				$stmt->bind_param("ssss", $create_email, $hash, $firstname, $lastname);
 				$stmt->execute();
 				$stmt->close();
 		  }
